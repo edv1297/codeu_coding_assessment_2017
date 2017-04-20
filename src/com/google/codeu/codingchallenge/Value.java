@@ -5,7 +5,7 @@ public class Value{
   /**
    * The kind of Value this is.
    */
-  private int kind;		// type of token
+  public int kind;		// type of token
   /**
    * Value is a number.
    */
@@ -14,6 +14,7 @@ public class Value{
      * Value is a boolean.
      */
     static public final int sumString = 2;
+
     /**
       * A string value
     */
@@ -38,13 +39,13 @@ public class Value{
       return kind == sumString;
     }
     public String getString (){
+
       return aString;
     }
-
     public JSON getJSON(){
+
       return aJSON;
     }
-
     public boolean equals(Object other){
       //PRE: given a string or JSON to compare,
       //POST: Return true if they are logically equal.
@@ -56,7 +57,7 @@ public class Value{
 
       switch(this.kind){
         case sumJSON:
-        result = this.aJSON.toString().equals(
+        result = aJSON.toString().equals(
                  that.aJSON.toString());
                  break;
         case sumString:
@@ -77,8 +78,6 @@ public class Value{
       String result ="<unknown>";
       if(kind==sumJSON){
         result = ""+aJSON;
-      }else{
-        result = aString;
       }
       return result;
 

@@ -19,8 +19,43 @@ import java.io.IOException;
 final class MyJSONParser implements JSONParser {
 
   @Override
-  public JSON parse(String in) throws IOException {
-    // TODO: implement this
-    return new MyJSON();
+  public JSON parse(String in)throws IOException {
+    MyJSON json;
+    String name;
+    Value value;
+    int start, end;
+
+    if(in.startsWith("{") && in.endsWith("}") ){
+      if(in.contains("\"") && in.contains(":")){
+        start = in.indexOf("\"");
+        end = in.indexOf("\"", start);
+        if(start>0  && end > 0){
+          name = in.substring(start+1, end);
+          if(in.indexOf("}") == in.lastIndexOf("}")){
+            int valueStart = in.indexOf("\"", in.indexOf(":"));
+            int valueEnd = in.indexOf("\"", valueStart);
+
+            if(valueStart>0 && valueEnd>0){
+              value = new Value(in.substring(valueStart,valueEnd));
+              // good std input
+              return new MyJSON(name, value);
+            }
+            else{
+              int startKey = in.indexOf(":", end);
+              Value key= new Value(in.substring(startKey+1));
+
+              int recursiveStart = in.indexOf("{", in.indexOf(":"));
+              int recursiveEnd = in.indexOf("}", recursiveStart);
+              String search = in.substring(recursiveStart, recursiveEnd+1);
+
+              parse(search);
+              return new MyJSON(name,key);
+            }
+          }
+          //good curly braces but bad formatting within them
+          System.out.println("<Improper formatting>: Please try again.");
+        }}}
+        //empty entry "{ }"";
+        return new MyJSON();
+    }
   }
-}

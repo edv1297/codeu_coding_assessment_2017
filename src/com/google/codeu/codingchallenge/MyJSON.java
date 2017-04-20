@@ -18,12 +18,20 @@ import java.util.Collection;
 import java.util.HashMap;
 
 final class MyJSON implements JSON {
-private HashMap <String,Value> data = new HashMap<String, Value>();
+private HashMap <String,Value> data ;
 
 public MyJSON(String name, Value value){
+  if(value.getString().startsWith("{")){
+    value.kind = 1;
+  }
+  else {
+    value.kind = 2;
+  }
   data.put(name, value);
 }
-public MyJSON(){}
+public MyJSON(){
+
+}
 
   @Override
   //pre: given an input that is initialized by curly braces
