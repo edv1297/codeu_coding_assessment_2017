@@ -40,22 +40,29 @@ final class MyJSONParser implements JSONParser {
               // good std input
               return new MyJSON(name, value);
             }
-            else{
+          }else{
               int startKey = in.indexOf(":", end);
-              Value key= new Value(in.substring(startKey+1));
+             Value key= new Value(in.substring(startKey+1));
 
               int recursiveStart = in.indexOf("{", in.indexOf(":"));
               int recursiveEnd = in.indexOf("}", recursiveStart);
               String search = in.substring(recursiveStart, recursiveEnd+1);
 
+
               parse(search);
-              return new MyJSON(name,key);
+
             }
           }
           //good curly braces but bad formatting within them
           System.out.println("<Improper formatting>: Please try again.");
-        }}}
-        //empty entry "{ }"";
-        return new MyJSON();
+        }
+      System.out.println("<Improper formatting>: Please try again.");
+    }
+return new MyJSON();
+      }
+
+    private JSON parseHelper(String name, Value value){
+      return new MyJSON(name,value);
+
     }
   }
